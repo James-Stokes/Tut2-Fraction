@@ -28,6 +28,8 @@ public:
 		}
 	}
 
+//the subtact method simply calls the add method but passes in false to the third argument to tell teh add method to
+//subtract. Code is more efficiently reused
 	void subtract(int n, int d) {
 		add(n, d, false);
 	}
@@ -37,10 +39,13 @@ public:
 		denominator *= d;
 	}
 
+//calls the multiply method but with the numerator and denominatlor switched arround t devide
+//Code is more efficiently reused
 	void divide(int n, int d) {
 		multiply(d, n);
 	}
 
+//calculates the greatest common divisor to simplify the final answer
 	int gcd(int a, int b) {
 		int remainder = a % b;
 		if (remainder == 0)
