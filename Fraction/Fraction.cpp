@@ -2,23 +2,20 @@
 
 using namespace std;
 
-class Fraction{
+class Fraction {
 private:
 	int numerator;
 	int denominator;
 
 public:
-	Fraction(){
-	}
-
-	void add(int n, int d, bool add = true){
-		if (denominator == d){
+	void add(int n, int d, bool add = true) {
+		if (denominator == d) {
 			if (add)
 				numerator += n;
 			else
 				numerator -= n;
 		}
-		else{
+		else {
 			int com_denom = denominator*d;
 			numerator *= com_denom / denominator;
 			n *= com_denom / d;
@@ -31,35 +28,46 @@ public:
 		}
 	}
 
-	void subtract(int n, int d){
+	void subtract(int n, int d) {
 		add(n, d, false);
 	}
 
-	void multiply(int n, int d){
+	void multiply(int n, int d) {
 		numerator *= n;
 		denominator *= d;
 	}
 
-	void divide(int n, int d){
+	void divide(int n, int d) {
 		multiply(d, n);
 	}
 
-	void getValues(int &n, int &d){
+	int gcd(int a, int b) {
+		int remainder = a % b;
+		if (remainder == 0)
+			return b;
+		else
+			return gcd(b, remainder);
+	}
+
+	void getValues(int &n, int &d) {
 		n = numerator;
 		d = denominator;
 	}
 
-	void setValues(int n, int d){
+	void setValues(int n, int d) {
 		numerator = n;
 		denominator = d;
 	}
 
-	void print(){
+	void print() {
+		int com_denom = gcd(numerator, denominator);
+		numerator /= com_denom;
+		denominator /= com_denom;
 		cout << numerator << "/" << denominator << endl;
 	}
 };
 
-int main(){
+int main() {
 	Fraction fraction;
 	fraction.setValues(5, 6);
 	fraction.add(1, 2);
