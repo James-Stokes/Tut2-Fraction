@@ -8,30 +8,23 @@ private:
 	int denominator;
 
 public:
-	void add(int n, int d, bool add = true) {
+	void add(int n, int d) {
 		if (denominator == d) {
-			if (add)
 				numerator += n;
-			else
-				numerator -= n;
 		}
 		else {
 			int com_denom = denominator*d;
 			numerator *= com_denom / denominator;
 			n *= com_denom / d;
 			denominator = com_denom;
-			if (add)
-				numerator += n;
-			else
-				numerator -= n;
-
+			numerator += n;
 		}
 	}
 
 //the subtact method simply calls the add method but passes in false to the third argument to tell teh add method to
 //subtract. Code is more efficiently reused
 	void subtract(int n, int d) {
-		add(n, d, false);
+		add(-n, d);
 	}
 
 	void multiply(int n, int d) {
