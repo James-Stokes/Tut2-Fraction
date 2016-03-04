@@ -36,11 +36,6 @@ public:
 		return result;
 	}
 
-	//makes the fraction negetave
-	void negate() {
-		this->numerator = -this->numerator;
-	}
-
 	Fraction operator*(const Fraction& fract) {
 		cout << this->numerator << "/" << this->denominator << " * " << fract.numerator << "/" << fract.denominator << endl;
 		Fraction result;
@@ -51,8 +46,12 @@ public:
 
 //calls the multiply method but with the numerator and denominatlor switched arround t devide
 //Code is more efficiently reused
-	void divide(int n, int d) {
-		//multiply(d, n);
+	Fraction operator/(const Fraction& fract) {
+		Fraction temp1, temp2, result;
+		temp1.setValues(this->numerator, this->denominator);
+		temp2.setValues(fract.denominator, fract.numerator);
+		result = temp1 * temp2;
+		return result;
 	}
 
 //calculates the greatest common divisor to simplify the final answer
@@ -78,7 +77,14 @@ public:
 		int com_denom = gcd(result.numerator, result.denominator);
 		result.numerator /= com_denom;
 		result.denominator /= com_denom;
-		cout << result. numerator << "/" << result.denominator << endl;
+		if (result.denominator == 1)
+			cout << " = "  << result.numerator << endl;
+		else if (result.numerator == 0)
+			cout << " = 0" << endl;
+		else if (result.denominator == 0)
+			cout << "NaN" << endl;
+		else 
+			cout << " = " << result. numerator << "/" << result.denominator << endl;
 	}
 };
 
@@ -86,7 +92,7 @@ int main() {
 	Fraction fraction1, fraction2, fractionResult;
 	fraction1.setValues(1, 2);
 	fraction2.setValues(1, 4);
-	fractionResult = fraction1 - fraction2;
+	fractionResult = fraction1 / fraction2;
 	fractionResult.print(fractionResult);
 	return 0;
 }
