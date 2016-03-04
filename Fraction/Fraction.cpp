@@ -8,34 +8,51 @@ private:
 	int denominator;
 
 public:
-	void add(int n, int d) {
-		if (denominator == d) {
-				numerator += n;
+	Fraction operator+(const Fraction& fract) {
+		Fraction result;
+			cout << this->numerator << "/" << this->denominator << " + " << fract.numerator << "/" << fract.denominator << endl;
+			
+		if (this->denominator == fract.denominator) {
+			result.numerator = fract.numerator + this->numerator;
+			result.denominator = this->denominator;
 		}
 		else {
-			int com_denom = denominator*d;
-			numerator *= com_denom / denominator;
-			n *= com_denom / d;
-			denominator = com_denom;
-			numerator += n;
+			int com_denom = this->denominator*fract.denominator;
+			this->numerator *= com_denom / this->denominator;
+			result.numerator = fract.numerator*(com_denom / fract.denominator);
+			result.denominator = com_denom;
+			result.numerator += this->numerator;
+			this->numerator /= com_denom / this->denominator;
 		}
+		return result;
 	}
 
-//the subtact method simply calls the add method but passes in false to the third argument to tell teh add method to
-//subtract. Code is more efficiently reused
-	void subtract(int n, int d) {
-		add(-n, d);
+//the subtact method simply calls the add method but passes in a negetave value for the second operand
+	Fraction operator-(const Fraction& fract) {
+		Fraction temp1, temp2, result;
+		temp1.setValues(this->numerator, this->denominator);
+		temp2.setValues(-(fract.numerator), fract.denominator);
+		result = temp1 + temp2;
+		return result;
 	}
 
-	void multiply(int n, int d) {
-		numerator *= n;
-		denominator *= d;
+	//makes the fraction negetave
+	void negate() {
+		this->numerator = -this->numerator;
+	}
+
+	Fraction operator*(const Fraction& fract) {
+		cout << this->numerator << "/" << this->denominator << " * " << fract.numerator << "/" << fract.denominator << endl;
+		Fraction result;
+		result.numerator = this->numerator * fract.numerator;
+		result.denominator = this->denominator * fract.denominator;
+		return result;
 	}
 
 //calls the multiply method but with the numerator and denominatlor switched arround t devide
 //Code is more efficiently reused
 	void divide(int n, int d) {
-		multiply(d, n);
+		//multiply(d, n);
 	}
 
 //calculates the greatest common divisor to simplify the final answer
@@ -57,18 +74,19 @@ public:
 		denominator = d;
 	}
 
-	void print() {
-		int com_denom = gcd(numerator, denominator);
-		numerator /= com_denom;
-		denominator /= com_denom;
-		cout << numerator << "/" << denominator << endl;
+	void print(Fraction result) {
+		int com_denom = gcd(result.numerator, result.denominator);
+		result.numerator /= com_denom;
+		result.denominator /= com_denom;
+		cout << result. numerator << "/" << result.denominator << endl;
 	}
 };
 
 int main() {
-	Fraction fraction;
-	fraction.setValues(5, 6);
-	fraction.add(1, 2);
-	fraction.print();
+	Fraction fraction1, fraction2, fractionResult;
+	fraction1.setValues(1, 2);
+	fraction2.setValues(1, 4);
+	fractionResult = fraction1 - fraction2;
+	fractionResult.print(fractionResult);
 	return 0;
 }
